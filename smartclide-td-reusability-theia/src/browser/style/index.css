@@ -1,0 +1,210 @@
+#widget-container h2 {
+    color: var(--theia-ui-font-color1);
+    font-size: 12px;
+    font-weight: 400;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+/* menu */
+#widget-container > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+}
+
+#widget-container > ul li {
+  float: left;
+}
+
+#widget-container > ul li span {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+
+#widget-container > ul li span:hover:not(.active) {
+  background-color: #5a5a5a;
+}
+
+.active {
+  background-color: #5a5a5a;
+}
+
+/* AlertMessage */
+.theia-info-alert{
+	padding: 4px;
+}
+
+/* input */
+#widget-container input{
+	margin-left: 10px;
+	background: transparent;
+  border: none;
+  color: white;
+  width: 50%;
+}
+
+/* TD Principal */
+#TDIndex{
+	display: none;
+	margin-left: 10px;
+}
+
+#issuesNumber{
+	display: none;
+	margin-left: 10px;
+  margin-bottom: auto;
+}
+
+#issues{
+	margin-left: 10px;
+}
+
+.divIssue{
+	border-style: solid;
+  border-width: thin;
+  margin: 5px;
+	padding: 2px;
+	border-color: #6a6a6a;
+}
+
+.divIssue i{
+    font-size: 12px;
+    word-wrap: break-word;
+}
+
+.divIssue span{
+	float: right;
+}
+
+.divIssue p{
+	display: block;
+    font-size: 13px;
+	margin: auto;
+	margin-top: 3px;
+}
+
+/* TD Interest */
+#td-interest{
+	display: none;
+}
+
+#TDIndexInterest{
+	display: none;
+	margin-left: 10px;
+}
+
+/* #interest-buttons{
+	display:none;
+} */
+
+#interest-ShowHideFiles{
+	padding: 1px;
+}
+
+#interest-ShowHideChart{
+	margin-left: 30px;
+	padding: 1px;
+}
+
+/* #chartInterest{
+	display: none;
+} */
+
+
+
+/* Reusability */
+#reusability{
+	display: none;
+}
+
+#indexReusability{
+	display: none;
+	margin-left: 10px;
+}
+
+#reusability-ShowHideFiles{
+	padding: 1px;
+}
+
+#reusability-ShowHideChart{
+	margin-left: 30px;
+	padding: 1px;
+}
+
+
+
+.ShowHide-buttons{
+	display:none;
+}
+
+.chart{
+	width: 100%;
+	height: 300px;
+	display: none;
+}
+
+.recharts-default-tooltip{
+	background-color: transparent !important;
+}
+
+g[aria-labelledby][filter]{
+  display: none;
+}
+
+
+/* Arrows */
+.pic {
+    margin-left: 5px;
+    display: inline-block;
+}
+.arrow-up {
+	border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 12px solid #0fff00;
+}
+.arrow-down {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 12px solid #ff0000;
+}
+
+/* footer */
+#widget-container footer{
+	margin-top: 8px;
+	color: #777;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+/* waiting animation */
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
