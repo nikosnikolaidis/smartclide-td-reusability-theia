@@ -127,4 +127,145 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 
 
 
+	//create chart Interest
+	static createChartInterest():void{
+		//remove previous
+		am4core.disposeAllCharts();
+		(document.getElementById('chartInterest') as HTMLElement).innerHTML= '';
+
+		//create
+		am4core.useTheme(am4themes_animated);
+		let chart = am4core.create("chartInterest", am4charts.XYChart);
+		chart.data = SmartclideTdReusabilityTheiaWidget.stateInterest.data;
+
+		// Create axes
+		let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+		categoryAxis.dataFields.category = "name";
+		var valueAxisY = chart.yAxes.push(new am4charts.ValueAxis());
+
+		// Create series
+		let series = chart.series.push(new am4charts.LineSeries());
+		series.stroke = am4core.color("#7973ff");
+		series.strokeWidth = 2;
+		series.dataFields.valueY = 'value';
+		series.dataFields.categoryX = 'name';
+		series.minBulletDistance = 10;
+		series.tooltipText = "{valueY}"+" €";
+	
+		// Configure grid
+		valueAxisY.renderer.grid.template.strokeOpacity = 1;
+		valueAxisY.renderer.grid.template.stroke = am4core.color("#666666");
+		valueAxisY.renderer.grid.template.strokeWidth = 1;
+		categoryAxis.renderer.grid.template.strokeOpacity = 1;
+		categoryAxis.renderer.grid.template.stroke = am4core.color("#666666");
+		categoryAxis.renderer.grid.template.strokeWidth = 1;
+
+		// Configure labels
+		valueAxisY.renderer.labels.template.fill = am4core.color("#666666");
+		categoryAxis.renderer.labels.template.fill = am4core.color("#666666");
+
+		//customatize scrollbar
+		chart.scrollbarX = new am4core.Scrollbar();
+		chart.scrollbarX.minHeight=10;
+		SmartclideTdReusabilityTheiaWidget.customizeGrip(chart.scrollbarX.startGrip);
+		SmartclideTdReusabilityTheiaWidget.customizeGrip(chart.scrollbarX.endGrip);
+
+		//zoom out button
+		chart.zoomOutButton.align = "left";
+		chart.zoomOutButton.valign = "top";
+		chart.zoomOutButton.marginLeft = 10;
+		chart.zoomOutButton.marginTop = 10;
+
+		// Add cursor
+		chart.cursor = new am4charts.XYCursor();
+		chart.cursor.xAxis = categoryAxis;
+		chart.cursor.snapToSeries = series;
+	}
+
+	static createChartReusability(){
+		console.log("dd:"+SmartclideTdReusabilityTheiaWidget.stateReusability.data.length);
+		if(SmartclideTdReusabilityTheiaWidget.stateReusability.data.length==0){
+			(document.getElementById("waitReusability") as HTMLElement).style.display = "block";
+		}
+		else{
+			(document.getElementById("waitReusability") as HTMLElement).style.display = "none";
+			
+			//remove previous
+			am4core.disposeAllCharts();
+			(document.getElementById('chartReusability') as HTMLElement).innerHTML= '';
+
+			//create
+			am4core.useTheme(am4themes_animated);
+			let chart = am4core.create("chartReusability", am4charts.XYChart);
+			chart.data = SmartclideTdReusabilityTheiaWidget.stateReusability.data;
+
+			// Create axes
+			let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+			categoryAxis.dataFields.category = "revisionCount";
+			var valueAxisY = chart.yAxes.push(new am4charts.ValueAxis());
+
+			// Create series
+			let series = chart.series.push(new am4charts.LineSeries());
+			series.stroke = am4core.color("#7973ff");
+			series.strokeWidth = 2;
+			series.dataFields.valueY = 'index';
+			series.dataFields.categoryX = 'revisionCount';
+			series.minBulletDistance = 10;
+			series.tooltipText = "{valueY}";
+		
+			// Configure grid
+			valueAxisY.renderer.grid.template.strokeOpacity = 1;
+			valueAxisY.renderer.grid.template.stroke = am4core.color("#666666");
+			valueAxisY.renderer.grid.template.strokeWidth = 1;
+			categoryAxis.renderer.grid.template.strokeOpacity = 1;
+			categoryAxis.renderer.grid.template.stroke = am4core.color("#666666");
+			categoryAxis.renderer.grid.template.strokeWidth = 1;
+
+			// Configure labels
+			valueAxisY.renderer.labels.template.fill = am4core.color("#666666");
+			categoryAxis.renderer.labels.template.fill = am4core.color("#666666");
+
+			//customatize scrollbar
+			chart.scrollbarX = new am4core.Scrollbar();
+			chart.scrollbarX.minHeight=10;
+			SmartclideTdReusabilityTheiaWidget.customizeGrip(chart.scrollbarX.startGrip);
+			SmartclideTdReusabilityTheiaWidget.customizeGrip(chart.scrollbarX.endGrip);
+
+			//zoom out button
+			chart.zoomOutButton.align = "left";
+			chart.zoomOutButton.valign = "top";
+			chart.zoomOutButton.marginLeft = 10;
+			chart.zoomOutButton.marginTop = 10;
+
+			// Add cursor
+			chart.cursor = new am4charts.XYCursor();
+			chart.cursor.xAxis = categoryAxis;
+			chart.cursor.snapToSeries = series;
+		}
+	}
+
+	// Style scrollbar
+	static customizeGrip(grip: any) {
+		// Remove default grip image
+		grip.icon.disabled = true;
+		// Disable background
+		grip.background.disabled = true;
+		
+		// Add rotated rectangle as bi-di arrow
+		var img = grip.createChild(am4core.Rectangle);
+		img.width = 5;
+		img.height = 5;
+		img.fill = am4core.color("#999");
+		img.rotation = 45;
+		img.align = "center";
+		img.valign = "middle";
+		
+		// Add vertical bar
+		var line = grip.createChild(am4core.Rectangle);
+		line.height = 20;
+		line.width = 3;
+		line.fill = am4core.color("#999");
+		line.align = "center";
+		line.valign = "middle";
+	}
 }
