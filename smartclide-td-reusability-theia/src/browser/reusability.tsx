@@ -9,7 +9,7 @@ interface projectReusabilityInfo {
 
 export class Reusability {
     
-    //Get Interest for chart
+    //Get Reusability for chart
      runprocessLoadReusability(messageService: MessageService){
 
         //SmartclideTdReusabilityTheiaWidget.stateReusability.data = await Reusability.getAllReusabilityIndexes();
@@ -31,18 +31,14 @@ export class Reusability {
         //Get only last commit index
         fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
                 '/api/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL
-                    +"&limit=1", {mode: 'cors'})
+                    , {mode: 'cors'})
             .then(res => res.json())
             .then((out) => {
                 var obj= JSON.parse(JSON.stringify(out));
                 
-                //add data for chart
-                var lastSha='';
-                var lastIndex=0;
-                for(let i of obj){
-                    lastSha= i.sha;
-                    lastIndex= i.index;
-                }
+                var lastSha= obj[obj.length-1].sha;
+                var lastIndex= obj[obj.length-1].index;
+
                 console.log('last sha: '+lastSha);
                 (document.getElementById('reusability-buttons') as HTMLElement).style.display = "block";
                 

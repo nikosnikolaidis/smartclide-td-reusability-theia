@@ -10,7 +10,7 @@ export class Principal {
 		if(SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL!=''){
 			console.log('url: '+ SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL);
 			//GET measures TD and number of issues
-			fetch(SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL+'/api/measures/component?component=NodeApp&metricKeys=code_smells,sqale_index', {mode: 'cors'})
+			fetch(SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL+'/api/measures/component?component=test_smart&metricKeys=code_smells,sqale_index', {mode: 'cors'})
 				.then(res => res.json())
 				.then((out) => {
 					var obj= JSON.parse(JSON.stringify(out));
@@ -63,7 +63,7 @@ export class Principal {
 		console.log('page:::'+page);
 		
 		//GET
-		fetch(SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL+'/api/issues/search?pageSize=500&componentKeys=NodeApp&types=CODE_SMELL&p='+page, {mode: 'cors'})
+		fetch(SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL+'/api/issues/search?pageSize=500&componentKeys=test_smart&types=CODE_SMELL&p='+page, {mode: 'cors'})
 			.then(res => res.json())
 			.then((out) => {
 				var obj= JSON.parse(JSON.stringify(out));

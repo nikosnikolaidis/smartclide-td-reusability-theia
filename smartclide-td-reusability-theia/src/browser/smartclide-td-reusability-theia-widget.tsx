@@ -95,9 +95,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 					<button id='reusability-ShowHideFiles' className='theia-button secondary' title='Hide Files' onClick={_a => reusabilityInstance.runprocessShowFiles()}>Hide Files</button>
 					<button id='reusability-ShowHideChart' className='theia-button secondary' title='Show Evolution' onClick={_a => reusabilityInstance.runprocessShowEvolution()}>Show Evolution</button>
 				</div>
-				<div id='chartReusability' className='chart'>
-					<div id='waitReusability' className="lds-dual-ring"></div>
-				</div>
+				<div id='chartReusability' className='chart'></div>
 				<div id='filesReusability'></div>
 			</div>
 			
@@ -184,13 +182,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 
 	static createChartReusability(){
 		console.log("dd:"+SmartclideTdReusabilityTheiaWidget.stateReusability.data.length);
-		if(SmartclideTdReusabilityTheiaWidget.stateReusability.data.length==0){
-			(document.getElementById("waitReusability") as HTMLElement).style.display = "block";
-		}
-		else{
-			(document.getElementById("waitReusability") as HTMLElement).style.display = "none";
-			
-			//remove previous
+		//remove previous
 			am4core.disposeAllCharts();
 			(document.getElementById('chartReusability') as HTMLElement).innerHTML= '';
 
@@ -241,7 +233,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 			chart.cursor = new am4charts.XYCursor();
 			chart.cursor.xAxis = categoryAxis;
 			chart.cursor.snapToSeries = series;
-		}
+		
 	}
 
 	// Style scrollbar
