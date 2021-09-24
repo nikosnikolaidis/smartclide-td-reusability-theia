@@ -9,7 +9,8 @@
     "src"
   ],
   "dependencies": {
-    "@theia/core": "latest"
+    "@theia/core": "latest",
+	  "@amcharts/amcharts4": "latest"
   },
   "devDependencies": {
     "rimraf": "latest",
