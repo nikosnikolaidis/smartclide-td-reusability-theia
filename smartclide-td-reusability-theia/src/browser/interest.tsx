@@ -1,6 +1,12 @@
 import { SmartclideTdReusabilityTheiaWidget } from './smartclide-td-reusability-theia-widget';
 import { MessageService } from '@theia/core';
 
+interface interestAnalysisReport {
+    id: number;
+    url: string;
+    owner: string;
+	repo: string;
+}
 
 export class Interest {
 	//Get Interest for chart
@@ -118,8 +124,36 @@ export class Interest {
 	
 	//Analyze Interest
 	runprocessAnalyzeInterest(messageService: MessageService){
-		//TODO
+		let interestReport = { data: { } };
+
+		(async () => {
+            try {
+                interestReport.data = await Interest.postInteresAnalysis<interestAnalysisReport>();
+				this.runprocessGetInterest(messageService);
+            } catch(e) {}
+        })()
 	}
+
+	static async postInteresAnalysis<T>(): Promise<T> {
+		const data = { url: SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL };
+		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
+            '/api/startInterestAnalysis', { method: 'post',
+			headers: {
+				'Accept': '*/*',
+				'Access-Control-Allow-Origin': '*',
+				'Content-Type':  'application/json'
+			},
+			body: JSON.stringify(data)
+		});
+        const body = await response.json();
+        console.log("Interest analysis finished");
+        return body;
+    }
+
+	//Analysis with token
+	//static async postInteresAnalysisToken<T>(): Promise<T> {
+        //TODO
+    //}
 
 	//show or hide Interest of Files
 	runprocessShowFiles(){
