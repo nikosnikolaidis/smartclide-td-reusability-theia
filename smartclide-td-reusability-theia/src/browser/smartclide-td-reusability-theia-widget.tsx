@@ -21,6 +21,8 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		SonarQubeURL: '',
 		InterestServiceURL: '',
 		InterestProjectURL: '',
+		InterestProjectHasToken: '',
+		InterestProjectToken: '',
 		InterestFileNumber: '',
 		ReusabilityServiceURL: '',
 		ReusabilityProjectURL: ''
@@ -75,6 +77,10 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				<AlertMessage type='INFO' header={header2} />
 				<input onChange={this.updateInput} placeholder='Interest Service URL' name='InterestServiceURL'/>
 				<input onChange={this.updateInput} placeholder='Project URL' name='InterestProjectURL'/>
+				<label>
+					<input type="checkbox" onChange={this.onCheckBoxChange}/>Is private (for new analysis)
+				</label>
+				<input id='interestProjectToken' onChange={this.updateInput} placeholder='Project Token' name='InterestProjectToken'/>
 				<button className='theia-button secondary' title='Load Interest' onClick={_a => interestInstance.runprocessGetInterest(this.messageService)}>Load Interest</button>
 				<button className='theia-button secondary' title='Analyze Interest' onClick={_a => interestInstance.runprocessAnalyzeInterest(this.messageService)}>Analyze Interest</button>
 				<p id='TDIndexInterest'></p>
@@ -122,6 +128,18 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		const key =e.currentTarget.name as keyof typeof SmartclideTdReusabilityTheiaWidget.state
 		SmartclideTdReusabilityTheiaWidget.state[key] = e.currentTarget.value;
     }
+
+	//update the state for checkbox
+	onCheckBoxChange(e: React.ChangeEvent<HTMLInputElement>) {
+		if(e.target.checked){
+			(document.getElementById("interestProjectToken") as HTMLElement).style.display = "block";
+			SmartclideTdReusabilityTheiaWidget.state.InterestProjectHasToken= 'yes';
+		}
+		else{
+			(document.getElementById("interestProjectToken") as HTMLElement).style.display = "none";
+			SmartclideTdReusabilityTheiaWidget.state.InterestProjectHasToken= 'no';
+		}
+	 }
 
 
 

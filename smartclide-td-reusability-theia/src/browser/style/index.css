@@ -8,31 +8,31 @@
 
 /* menu */
 #widget-container > ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333333;
+  	list-style-type: none;
+  	margin: 0;
+  	padding: 0;
+  	overflow: hidden;
+  	background-color: #333333;
 }
 
 #widget-container > ul li {
-  float: left;
+  	float: left;
 }
 
 #widget-container > ul li span {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 10px 16px;
-  text-decoration: none;
+  	display: block;
+  	color: white;
+  	text-align: center;
+  	padding: 10px 16px;
+  	text-decoration: none;
 }
 
 #widget-container > ul li span:hover:not(.active) {
-  background-color: #5a5a5a;
+  	background-color: #5a5a5a;
 }
 
 .active {
-  background-color: #5a5a5a;
+  	background-color: #5a5a5a;
 }
 
 /* AlertMessage */
@@ -44,9 +44,9 @@
 #widget-container input{
 	margin-left: 10px;
 	background: transparent;
-  border: none;
-  color: white;
-  width: 50%;
+  	border: none;
+  	color: white;
+  	width: 50%;
 }
 
 /* TD Principal */
@@ -58,7 +58,7 @@
 #issuesNumber{
 	display: none;
 	margin-left: 10px;
-  margin-bottom: auto;
+  	margin-bottom: auto;
 }
 
 #issues{
@@ -67,8 +67,8 @@
 
 .divIssue{
 	border-style: solid;
-  border-width: thin;
-  margin: 5px;
+  	border-width: thin;
+  	margin: 5px;
 	padding: 2px;
 	border-color: #6a6a6a;
 }
@@ -97,6 +97,19 @@
 #TDIndexInterest{
 	display: none;
 	margin-left: 10px;
+}
+
+#td-interest > label{
+	display: block;
+	font-style: italic;
+}
+
+input[type='checkbox']{
+	width: auto !important;
+}
+
+#interestProjectToken{
+	display: none;
 }
 
 /* #interest-buttons{
@@ -154,7 +167,7 @@
 }
 
 g[aria-labelledby][filter]{
-  display: none;
+  	display: none;
 }
 
 

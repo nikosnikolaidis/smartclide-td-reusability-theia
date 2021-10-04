@@ -126,16 +126,27 @@ export class Interest {
 	runprocessAnalyzeInterest(messageService: MessageService){
 		let interestReport = { data: { } };
 
+		//get data to send as body
+		let data;
+		if(SmartclideTdReusabilityTheiaWidget.state.InterestProjectHasToken=='no'){
+			data={url: SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL};
+		}
+		else{
+			data={url: SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL,
+				  token: SmartclideTdReusabilityTheiaWidget.state.InterestProjectToken};
+		}
+
+		//async post and then get
 		(async () => {
             try {
-                interestReport.data = await Interest.postInteresAnalysis<interestAnalysisReport>();
+                interestReport.data = await Interest.postInteresAnalysis<interestAnalysisReport>(data);
 				this.runprocessGetInterest(messageService);
             } catch(e) {}
         })()
 	}
 
-	static async postInteresAnalysis<T>(): Promise<T> {
-		const data = { url: SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL };
+	//Send Analysis with or without token
+	static async postInteresAnalysis<T>(data: { url: string; } | { url: string; token: string; }): Promise<T> {
 		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
             '/api/startInterestAnalysis', { method: 'post',
 			headers: {
@@ -149,11 +160,6 @@ export class Interest {
         console.log("Interest analysis finished");
         return body;
     }
-
-	//Analysis with token
-	//static async postInteresAnalysisToken<T>(): Promise<T> {
-        //TODO
-    //}
 
 	//show or hide Interest of Files
 	runprocessShowFiles(){
