@@ -7,26 +7,28 @@ export class Principal {
     //Get metrics for TD principal
     runprocessGetMetrics(messageService: MessageService): void {
 		//if field has value
-		if(SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL!=''){
-			console.log('url: '+ SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL);
+		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL!=''){
+			console.log('url: '+ SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL);
+			var temp= SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL.replace('.git','').split('/');
+			var projectName= temp[temp.length-1];
 			//GET measures TD and number of issues
-			fetch(SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL+'/api/measures/component?component=test_smart&metricKeys=code_smells,sqale_index', {mode: 'cors'})
+			fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/api/analysis/'+ projectName +'/measures', {mode: 'cors'})
 				.then(res => res.json())
 				.then((out) => {
 					var obj= JSON.parse(JSON.stringify(out));
 					var td=0;
-					var issues;
+					var issues=0;
 					//get first metric
-					if(obj.component.measures[0].metric == 'sqale_index')
-						td= obj.component.measures[0].value/60;
+					if(obj[0].name == 'sqale_index')
+						td= obj[0].value/60;
 					else
-						issues= obj.component.measures[0].value;
+						issues= obj[0].value;
 					
 					//get second metric
-					if(obj.component.measures[1].metric == 'code_smells')
-						issues= obj.component.measures[1].value;
+					if(obj[1].name == 'code_smells')
+						issues= obj[1].value;
 					else
-						td= obj.component.measures[1].value/60;
+						td= obj[1].value/60;
 					
 					console.log('td: '+td);
 					console.log('issues: '+issues);
@@ -38,13 +40,13 @@ export class Principal {
 					(document.getElementById('issuesNumber') as HTMLElement).innerHTML = "Issues: "+issues;
 					
 					//get Issues
-					var pages= Math.floor((issues-1)/500) + 1;
-					if(issues<10000){
-						console.log(pages);
-						for(let i=1; i<=pages; i++){
-							this.runprocessGetIssues(i);
-						}
-					}
+					//var pages= Math.floor((issues-1)/500) + 1;
+					//if(issues<10000){
+					//	console.log(pages);
+					//	for(let i=1; i<=pages; i++){
+							this.runprocessGetIssues();//i);
+					//	}
+					//}
 				})
 				.catch(err => { 
 					console.log('err: ', err);
@@ -59,23 +61,25 @@ export class Principal {
 	}
 
 	//Get Issues for given page
-	runprocessGetIssues(page: number): void {
-		console.log('page:::'+page);
-		
+	runprocessGetIssues():void{ //page: number): void {
+		//console.log('page:::'+page);
+		var temp= SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL.replace('.git','').split('/');
+		var projectName= temp[temp.length-1];
+
 		//GET
-		fetch(SmartclideTdReusabilityTheiaWidget.state.SonarQubeURL+'/api/issues/search?pageSize=500&componentKeys=test_smart&types=CODE_SMELL&p='+page, {mode: 'cors'})
+		fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/api/analysis/'+ projectName +'/issues', {mode: 'cors'})
 			.then(res => res.json())
 			.then((out) => {
 				var obj= JSON.parse(JSON.stringify(out));
-				console.log(obj.p);
+				//console.log(obj.p);
 				
 				//crate HTMLElement for each issue
-				for(let i of obj.issues){
-					var severity= i.severity;
-					var message= i.message;
+				for(let i of obj){
+					var severity= i.issueSeverity;
+					var message= i.issueName;
 					//var debt= i.debt;
 					var re = /(.*)[:]/;
-					var component= i.component.replace(re, "");
+					var component= i.issueDirectory.replace(re, "");
 					
 					let issuesDiv = document.getElementById('issues')!
 					let divIssue = document.createElement("div");

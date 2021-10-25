@@ -18,7 +18,8 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
     static readonly LABEL = 'Smartclide TD and Reusability';
 	
 	static state = {
-		SonarQubeURL: '',
+		PrincipalServiceURL: '',
+		PrincipalProjectURL: '',
 		InterestServiceURL: '',
 		InterestProjectURL: '',
 		InterestProjectHasToken: '',
@@ -67,7 +68,8 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 			</ul>
 			<div id='td-principal'>
 				<AlertMessage type='INFO' header={header} />
-				<input onChange={this.updateInput} placeholder='SonarQube URL' name='SonarQubeURL'/>
+				<input onChange={this.updateInput} placeholder='Principal Service URL' name='PrincipalServiceURL'/>
+				<input onChange={this.updateInput} placeholder='Project URL' name='PrincipalProjectURL'/>
 				<button className='theia-button secondary' title='Load Last Analysis' onClick={_a => principalInstance.runprocessGetMetrics(this.messageService)}>Load Last Analysis</button>
 				<p id='TDIndex'></p>
 				<p id='issuesNumber'></p>
