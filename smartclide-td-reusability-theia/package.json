@@ -3,14 +3,14 @@
   "keywords": [
     "theia-extension"
   ],
-  "version": "0.0.0",
+  "version": "0.0.1",
   "files": [
     "lib",
     "src"
   ],
   "dependencies": {
-    "@theia/core": "latest",
-	  "@amcharts/amcharts4": "latest"
+    "@amcharts/amcharts4": "latest",
+    "@theia/core": "latest"
   },
   "devDependencies": {
     "rimraf": "latest",
