@@ -15,7 +15,7 @@
     "@theia/process": "latest",
     "@theia/terminal": "latest",
     "@theia/workspace": "latest",
-    "smartclide-td-reusability-theia": "0.0.0"
+    "smartclide-td-reusability-theia": "0.0.1"
   },
   "devDependencies": {
     "@theia/cli": "latest"

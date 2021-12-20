@@ -1,4 +1,4 @@
-#widget-container h2 {
+#widget-container-TDReusability h2 {
     color: var(--theia-ui-font-color1);
     font-size: 12px;
     font-weight: 400;
@@ -7,7 +7,7 @@
 }
 
 /* menu */
-#widget-container > ul {
+#widget-container-TDReusability > ul {
   	list-style-type: none;
   	margin: 0;
   	padding: 0;
@@ -15,11 +15,11 @@
   	background-color: #333333;
 }
 
-#widget-container > ul li {
+#widget-container-TDReusability > ul li {
   	float: left;
 }
 
-#widget-container > ul li span {
+#widget-container-TDReusability > ul li span {
   	display: block;
   	color: white;
   	text-align: center;
@@ -27,11 +27,11 @@
   	text-decoration: none;
 }
 
-#widget-container > ul li span:hover:not(.active) {
+#widget-container-TDReusability > ul li span:hover:not(.active) {
   	background-color: #5a5a5a;
 }
 
-.active {
+#widget-container-TDReusability > .active {
   	background-color: #5a5a5a;
 }
 
@@ -41,7 +41,7 @@
 }
 
 /* input */
-#widget-container input{
+#widget-container-TDReusability input{
 	margin-left: 10px;
 	background: transparent;
   	border: none;
@@ -104,7 +104,7 @@
 	font-style: italic;
 }
 
-input[type='checkbox']{
+#widget-container-TDReusability > input[type='checkbox']{
 	width: auto !important;
 }
 
@@ -188,7 +188,7 @@ g[aria-labelledby][filter]{
 }
 
 /* footer */
-#widget-container footer{
+#widget-container-TDReusability > footer{
 	margin-top: 8px;
 	color: #777;
 	text-align: center;

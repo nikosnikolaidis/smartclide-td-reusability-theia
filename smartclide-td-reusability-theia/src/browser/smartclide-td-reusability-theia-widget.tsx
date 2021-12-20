@@ -71,7 +71,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		const principalInstance= new Principal();
 		const reusabilityInstance= new Reusability();
 
-        return <div id='widget-container'>
+        return <div id='widget-container-TDReusability'>
 			<ul>
 				<li><span id='menuPrincipal' className='active' onClick={_a => this.clickMenu('menuPrincipal','td-principal')}>TD Principal</span></li>
 				<li><span id='menuInterest' onClick={_a => this.clickMenu('menuInterest','td-interest')}>TD Interest</span></li>
