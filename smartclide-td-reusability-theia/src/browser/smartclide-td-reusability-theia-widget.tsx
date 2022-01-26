@@ -20,6 +20,7 @@ import { Reusability} from './reusability';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import { VictoryChart, VictoryLine, VictoryZoomContainer, VictoryLabel } from 'victory';
 
 
 @injectable()
@@ -47,7 +48,13 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 	static stateReusability ={
 		data: [{ revisionCount: 0, index: 0 }]
 	}
+
+	static zoomDomain: { x:[number,number] }
 	
+
+	handleZoom(domain : {x:[number,number]}) {
+		SmartclideTdReusabilityTheiaWidget.zoomDomain= domain;
+	}
 
     @inject(MessageService)
     protected readonly messageService!: MessageService;
@@ -71,7 +78,31 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		const principalInstance= new Principal();
 		const reusabilityInstance= new Reusability();
 
+		const sampleData = [
+			{x: 1, y: 13000},
+			{x: 2, y: 16500},
+			{x: 3, y: 14250},
+			{x: 4, y: 19000}
+		  ];
+		SmartclideTdReusabilityTheiaWidget.zoomDomain={x:[1,4]};
+
         return <div id='widget-container-TDReusability'>
+			<div>
+				<VictoryChart 
+				containerComponent={
+					<VictoryZoomContainer responsive={false}
+						zoomDimension="x"
+						zoomDomain={SmartclideTdReusabilityTheiaWidget.zoomDomain}
+						onZoomDomainChange={this.handleZoom.bind(this)}
+					/>
+					}>
+					<VictoryLine data={sampleData}
+					labels={({ datum }) => datum.y}
+					labelComponent={<VictoryLabel renderInPortal dy={-20}/>}
+						/>
+				</VictoryChart>
+			</div>
+			
 			<ul>
 				<li><span id='menuPrincipal' className='active' onClick={_a => this.clickMenu('menuPrincipal','td-principal')}>TD Principal</span></li>
 				<li><span id='menuInterest' onClick={_a => this.clickMenu('menuInterest','td-interest')}>TD Interest</span></li>
@@ -158,6 +189,8 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 
 	//create chart Interest
 	static createChartInterest():void{
+
+		/*
 		//remove previous
 		am4core.disposeAllCharts();
 		(document.getElementById('chartInterest') as HTMLElement).innerHTML= '';
@@ -209,6 +242,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		chart.cursor = new am4charts.XYCursor();
 		chart.cursor.xAxis = categoryAxis;
 		chart.cursor.snapToSeries = series;
+		*/
 	}
 
 	static createChartReusability(){

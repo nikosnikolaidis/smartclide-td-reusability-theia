@@ -9,6 +9,7 @@
     "src"
   ],
   "dependencies": {
+    "victory": "^36.2.0",
     "@amcharts/amcharts4": "latest",
     "@theia/core": "latest"
   },
