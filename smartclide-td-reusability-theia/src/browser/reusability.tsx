@@ -33,7 +33,11 @@ export class Reusability {
         //call async for all indexes
         (async () => {
             try {
-                SmartclideTdReusabilityTheiaWidget.stateReusability.data = await Reusability.getAllReusabilityIndexes<projectReusabilityInfo[]>();
+				var tempTable= await Reusability.getAllReusabilityIndexes<projectReusabilityInfo[]>();
+				for(var temp1 of tempTable){
+					SmartclideTdReusabilityTheiaWidget.stateReusability.data.push({x:temp1.revisionCount, y:temp1.index})
+				}
+                //SmartclideTdReusabilityTheiaWidget.stateReusability.data = await Reusability.getAllReusabilityIndexes<projectReusabilityInfo[]>();
                 SmartclideTdReusabilityTheiaWidget.createChartReusability();
             } catch(e) {}
         })()

@@ -43,7 +43,7 @@ export class Interest {
 					tempInterest= i.interestEu;
 					lastSha= i.sha;
 					tempInterestHours= i.interestHours;
-					SmartclideTdReusabilityTheiaWidget.stateInterest.data.push({name:i.revisionCount, value:i.interestEu});
+					SmartclideTdReusabilityTheiaWidget.stateInterest.data.push({x:i.revisionCount, y:i.interestEu});
 				}
 				console.log('last sha: '+lastSha);
 				(document.getElementById('interest-buttons') as HTMLElement).style.display = "block";

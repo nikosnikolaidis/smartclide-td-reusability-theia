@@ -17,10 +17,8 @@ import { MessageService } from '@theia/core';
 import { Interest} from './interest';
 import { Principal} from './principal';
 import { Reusability} from './reusability';
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4charts from "@amcharts/amcharts4/charts";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import { VictoryChart, VictoryLine, VictoryZoomContainer, VictoryLabel } from 'victory';
+import Chart from './chart';
+import ReactDOM = require('react-dom');
 
 
 @injectable()
@@ -42,19 +40,13 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 	}
 	
 	static stateInterest ={
-		data: [{ name: "", value: 0 }]
+		data: [{ x: 0, y: 0 }]
 	}
 	
 	static stateReusability ={
-		data: [{ revisionCount: 0, index: 0 }]
+		data: [{ x: 0, y: 0 }]
 	}
 
-	static zoomDomain: { x:[number,number] }
-	
-
-	handleZoom(domain : {x:[number,number]}) {
-		SmartclideTdReusabilityTheiaWidget.zoomDomain= domain;
-	}
 
     @inject(MessageService)
     protected readonly messageService!: MessageService;
@@ -78,31 +70,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		const principalInstance= new Principal();
 		const reusabilityInstance= new Reusability();
 
-		const sampleData = [
-			{x: 1, y: 13000},
-			{x: 2, y: 16500},
-			{x: 3, y: 14250},
-			{x: 4, y: 19000}
-		  ];
-		SmartclideTdReusabilityTheiaWidget.zoomDomain={x:[1,4]};
-
         return <div id='widget-container-TDReusability'>
-			<div>
-				<VictoryChart 
-				containerComponent={
-					<VictoryZoomContainer responsive={false}
-						zoomDimension="x"
-						zoomDomain={SmartclideTdReusabilityTheiaWidget.zoomDomain}
-						onZoomDomainChange={this.handleZoom.bind(this)}
-					/>
-					}>
-					<VictoryLine data={sampleData}
-					labels={({ datum }) => datum.y}
-					labelComponent={<VictoryLabel renderInPortal dy={-20}/>}
-						/>
-				</VictoryChart>
-			</div>
-			
 			<ul>
 				<li><span id='menuPrincipal' className='active' onClick={_a => this.clickMenu('menuPrincipal','td-principal')}>TD Principal</span></li>
 				<li><span id='menuInterest' onClick={_a => this.clickMenu('menuInterest','td-interest')}>TD Interest</span></li>
@@ -189,140 +157,13 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 
 	//create chart Interest
 	static createChartInterest():void{
-
-		/*
-		//remove previous
-		am4core.disposeAllCharts();
-		(document.getElementById('chartInterest') as HTMLElement).innerHTML= '';
-
-		//create
-		am4core.useTheme(am4themes_animated);
-		let chart = am4core.create("chartInterest", am4charts.XYChart);
-		chart.data = SmartclideTdReusabilityTheiaWidget.stateInterest.data;
-
-		// Create axes
-		let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-		categoryAxis.dataFields.category = "name";
-		var valueAxisY = chart.yAxes.push(new am4charts.ValueAxis());
-
-		// Create series
-		let series = chart.series.push(new am4charts.LineSeries());
-		series.stroke = am4core.color("#7973ff");
-		series.strokeWidth = 2;
-		series.dataFields.valueY = 'value';
-		series.dataFields.categoryX = 'name';
-		series.minBulletDistance = 10;
-		series.tooltipText = "{valueY}"+" €";
-	
-		// Configure grid
-		valueAxisY.renderer.grid.template.strokeOpacity = 1;
-		valueAxisY.renderer.grid.template.stroke = am4core.color("#666666");
-		valueAxisY.renderer.grid.template.strokeWidth = 1;
-		categoryAxis.renderer.grid.template.strokeOpacity = 1;
-		categoryAxis.renderer.grid.template.stroke = am4core.color("#666666");
-		categoryAxis.renderer.grid.template.strokeWidth = 1;
-
-		// Configure labels
-		valueAxisY.renderer.labels.template.fill = am4core.color("#666666");
-		categoryAxis.renderer.labels.template.fill = am4core.color("#666666");
-
-		//customatize scrollbar
-		chart.scrollbarX = new am4core.Scrollbar();
-		chart.scrollbarX.minHeight=10;
-		SmartclideTdReusabilityTheiaWidget.customizeGrip(chart.scrollbarX.startGrip);
-		SmartclideTdReusabilityTheiaWidget.customizeGrip(chart.scrollbarX.endGrip);
-
-		//zoom out button
-		chart.zoomOutButton.align = "left";
-		chart.zoomOutButton.valign = "top";
-		chart.zoomOutButton.marginLeft = 10;
-		chart.zoomOutButton.marginTop = 10;
-
-		// Add cursor
-		chart.cursor = new am4charts.XYCursor();
-		chart.cursor.xAxis = categoryAxis;
-		chart.cursor.snapToSeries = series;
-		*/
+		var chart= <Chart data={SmartclideTdReusabilityTheiaWidget.stateInterest.data} />;
+		ReactDOM.render(chart, document.getElementById("chartInterest"));
 	}
 
+	//create chart Reusability
 	static createChartReusability(){
-		console.log("dd:"+SmartclideTdReusabilityTheiaWidget.stateReusability.data.length);
-		//remove previous
-			am4core.disposeAllCharts();
-			(document.getElementById('chartReusability') as HTMLElement).innerHTML= '';
-
-			//create
-			am4core.useTheme(am4themes_animated);
-			let chart = am4core.create("chartReusability", am4charts.XYChart);
-			chart.data = SmartclideTdReusabilityTheiaWidget.stateReusability.data;
-
-			// Create axes
-			let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-			categoryAxis.dataFields.category = "revisionCount";
-			var valueAxisY = chart.yAxes.push(new am4charts.ValueAxis());
-
-			// Create series
-			let series = chart.series.push(new am4charts.LineSeries());
-			series.stroke = am4core.color("#7973ff");
-			series.strokeWidth = 2;
-			series.dataFields.valueY = 'index';
-			series.dataFields.categoryX = 'revisionCount';
-			series.minBulletDistance = 10;
-			series.tooltipText = "{valueY}";
-		
-			// Configure grid
-			valueAxisY.renderer.grid.template.strokeOpacity = 1;
-			valueAxisY.renderer.grid.template.stroke = am4core.color("#666666");
-			valueAxisY.renderer.grid.template.strokeWidth = 1;
-			categoryAxis.renderer.grid.template.strokeOpacity = 1;
-			categoryAxis.renderer.grid.template.stroke = am4core.color("#666666");
-			categoryAxis.renderer.grid.template.strokeWidth = 1;
-
-			// Configure labels
-			valueAxisY.renderer.labels.template.fill = am4core.color("#666666");
-			categoryAxis.renderer.labels.template.fill = am4core.color("#666666");
-
-			//customatize scrollbar
-			chart.scrollbarX = new am4core.Scrollbar();
-			chart.scrollbarX.minHeight=10;
-			SmartclideTdReusabilityTheiaWidget.customizeGrip(chart.scrollbarX.startGrip);
-			SmartclideTdReusabilityTheiaWidget.customizeGrip(chart.scrollbarX.endGrip);
-
-			//zoom out button
-			chart.zoomOutButton.align = "left";
-			chart.zoomOutButton.valign = "top";
-			chart.zoomOutButton.marginLeft = 10;
-			chart.zoomOutButton.marginTop = 10;
-
-			// Add cursor
-			chart.cursor = new am4charts.XYCursor();
-			chart.cursor.xAxis = categoryAxis;
-			chart.cursor.snapToSeries = series;
-		
-	}
-
-	// Style scrollbar
-	static customizeGrip(grip: any) {
-		// Remove default grip image
-		grip.icon.disabled = true;
-		// Disable background
-		grip.background.disabled = true;
-		
-		// Add rotated rectangle as bi-di arrow
-		var img = grip.createChild(am4core.Rectangle);
-		img.width = 5;
-		img.height = 5;
-		img.fill = am4core.color("#999");
-		img.rotation = 45;
-		img.align = "center";
-		img.valign = "middle";
-		
-		// Add vertical bar
-		var line = grip.createChild(am4core.Rectangle);
-		line.height = 20;
-		line.width = 3;
-		line.fill = am4core.color("#999");
-		line.align = "center";
-		line.valign = "middle";
+		var chart= <Chart data={SmartclideTdReusabilityTheiaWidget.stateReusability.data} />;
+		ReactDOM.render(chart, document.getElementById("chartReusability"));
 	}
 }
