@@ -1,39 +1,40 @@
 import * as React from 'react';
-import { VictoryChart, VictoryLine, VictoryZoomContainer, VictoryTheme } from 'victory';
+import { VictoryChart, VictoryLine, VictoryTheme, VictoryZoomContainer } from 'victory';
 
 interface Props {
 	data: { x: number; y: number; }[]
 }
+interface IState{
+	zoomDomain: { x:[number,number] }
+}
 
-export class Chart extends React.Component<Props> {
-    static zoomDomain: { x:[number,number] }
+export class Chart extends React.Component<Props,IState> {
 
-	handleZoom(domain : {x:[number,number]}) {
-		Chart.zoomDomain= domain;
+	handleZoom(domain: any ){
+		this.setState({ zoomDomain: domain });
 	}
 
     constructor(props: Props){
         super(props);
+
+		this.state = {
+			zoomDomain: {x:[1,this.props.data.length]}
+		};
     }
 
     render() {
-		Chart.zoomDomain={x:[1,this.props.data.length]};
-    
 		return <div>
-			<VictoryChart theme={VictoryTheme.material} width={400}
+			<VictoryChart theme={VictoryTheme.material} height={400} width={500}
 				containerComponent={
-					<VictoryZoomContainer responsive={true}
+					<VictoryZoomContainer responsive={false}
 						zoomDimension="x"
-						zoomDomain={Chart.zoomDomain}
+						zoomDomain={this.state.zoomDomain}
 						onZoomDomainChange={this.handleZoom.bind(this)}
 					/>
 				}>
 					<VictoryLine data={this.props.data}
-						//labels={({ datum }) => datum.y}
-						//labelComponent={<VictoryLabel renderInPortal dy={-20}/>}
 						style={{ data: { stroke: "#4367a2"}}}
 					/>
-					
 			</VictoryChart>
 		</div>
     }

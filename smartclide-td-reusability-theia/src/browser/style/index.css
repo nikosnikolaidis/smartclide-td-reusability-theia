@@ -162,8 +162,12 @@
 	display: none;
 }
 
-svg{
-	overflow: hidden !important;
+.VictoryContainer{
+	margin: auto;
+}
+
+.VictoryContainer > svg{
+	overflow: visible !important;
 }
 
 
