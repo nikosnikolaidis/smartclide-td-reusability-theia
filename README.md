@@ -1,20 +1,5 @@
 # smartclide-td-reusability-theia
-The example of how to build the Theia-based applications with the smartclide-td-reusability-theia.
-
-## Getting started
-
-Install [nvm](https://github.com/creationix/nvm#install-script).
-
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
-
-Install npm and node.
-
-    nvm install 10
-    nvm use 10
-
-Install yarn.
-
-    npm install -g yarn
+Theia extension for the calculation and visualization of TD principal, TD interest and reusability.
 
 ## Running the browser example
 
@@ -41,47 +26,3 @@ Open http://localhost:3000 in the browser.
     yarn start
 
 *or:* launch `Start Electron Backend` configuration from VS code.
-## Developing with the browser example
-
-Start watching all packages, including `browser-app`, of your application with
-
-    yarn watch
-
-*or* watch only specific packages with
-
-    cd smartclide-td-reusability-theia
-    yarn watch
-
-and the browser example.
-
-    cd browser-app
-    yarn watch
-
-Run the example as [described above](#Running-the-browser-example)
-## Developing with the Electron example
-
-Start watching all packages, including `electron-app`, of your application with
-
-    yarn watch
-
-*or* watch only specific packages with
-
-    cd smartclide-td-reusability-theia
-    yarn watch
-
-and the Electron example.
-
-    cd electron-app
-    yarn watch
-
-Run the example as [described above](#Running-the-Electron-example)
-
-## Publishing smartclide-td-reusability-theia
-
-Create a npm user and login to the npm registry, [more on npm publishing](https://docs.npmjs.com/getting-started/publishing-npm-packages).
-
-    npm login
-
-Publish packages with lerna to update versions properly across local packages, [more on publishing with lerna](https://github.com/lerna/lerna#publish).
-
-    npx lerna publish

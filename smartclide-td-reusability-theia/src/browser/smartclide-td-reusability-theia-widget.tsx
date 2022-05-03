@@ -34,10 +34,14 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		InterestProjectURL: '',
 		InterestProjectHasToken: '',
 		InterestProjectToken: '',
+		PrincipalProjectToken: '',
+		PrincipalSonarQubeProjectKey: '',
 		InterestFileNumber: '',
 		ReusabilityServiceURL: '',
 		ReusabilityProjectURL: ''
 	}
+	
+	static statePrincipalEndpoints=[{fileName: '', endpointMethod: ''}]
 	
 	static stateInterest ={
 		data: [{ x: 0, y: 0 }]
@@ -80,16 +84,40 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				<AlertMessage type='INFO' header={header} />
 				<input onChange={this.updateInput} placeholder='Principal Service URL' name='PrincipalServiceURL'/>
 				<input onChange={this.updateInput} placeholder='Project URL' name='PrincipalProjectURL'/>
-				<button className='theia-button secondary' title='Load Last Analysis' onClick={_a => principalInstance.runprocessGetMetrics(this.messageService)}>Load Last Analysis</button>
-				<p id='TDIndex'></p>
-				<p id='issuesNumber'></p>
-				<div id='issues'></div>
+				<input id='principalSonarQubeProjectKey' onChange={this.updateInput} placeholder='SonarQube Project Key' name='PrincipalSonarQubeProjectKey'/>
+				<label className='checkboxLabel'>
+					<input type="checkbox" onChange={this.onCheckBoxChangePrincipalPrivate}/>Is private
+				</label>
+				<input id='principalProjectToken' style={{display:"none"}} onChange={this.updateInput} placeholder='Git Token' name='PrincipalProjectToken'/>
+				<label className='checkboxLabel'>
+					<input type="checkbox" onChange={this.onCheckBoxChangePrincipalManualEndpoints}/>Add endpoints manually
+				</label>
+				<div id='listManualEndpoints'>
+					<button className='addNewEndpoint' onClick={_a => this.addEnpoint()} style={{marginLeft:"20px"}}>Add</button>
+					<ul id='listEndpoints'>
+						<li>
+							<input placeholder='File Name' className='fileName'/>
+							<input placeholder='Endpoint Method' className='endpointMethod'/>
+						</li>
+					</ul>
+				</div>
+				<button className='theia-button secondary' title='New Analysis' onClick={_a => principalInstance.runprocessNewAnalysis(this.messageService)} style={{display:"block", marginTop:"5px", marginBottom:"5px",}}>New Analysis</button>
+				<button className='theia-button secondary' title='Load Last Analysis' onClick={_a => principalInstance.runprocessGetMetrics(this.messageService)}>Project Analysis</button>
+				<button className='theia-button secondary' title='Enpoint Analysis' onClick={_a => principalInstance.runprocessGetMetricsEndpoint(this.messageService)}>Enpoint Analysis</button>
+				<div id='waitAnimation' className="lds-dual-ring"></div>
+				<div id='TdProjectResults'>
+					<p id='TDIndex' style={{marginLeft:'10px', display:'block'}}></p>
+					<p id='issuesNumber' style={{marginLeft:'10px', marginBottom:'auto', display:'block'}}></p>
+					<div id='issues' style={{marginLeft:'10px'}}></div>
+				</div>
+				<ul id='endpointResultsList'>
+				</ul>
 			</div>
 			<div id='td-interest'>
 				<AlertMessage type='INFO' header={header2} />
 				<input onChange={this.updateInput} placeholder='Interest Service URL' name='InterestServiceURL'/>
 				<input onChange={this.updateInput} placeholder='Project URL' name='InterestProjectURL'/>
-				<label>
+				<label className='checkboxLabel'>
 					<input type="checkbox" onChange={this.onCheckBoxChange}/>Is private (for new analysis)
 				</label>
 				<input id='interestProjectToken' onChange={this.updateInput} placeholder='Project Token' name='InterestProjectToken'/>
@@ -119,6 +147,30 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 			
 		</div>
     }
+
+
+	protected addEnpoint(): void {
+		let listEndpoints = document.getElementById('listEndpoints');
+		let listLi = document.createElement("li");
+		let liInput1 = document.createElement("input");
+		liInput1.className = 'fileName';
+		liInput1.placeholder= 'File Name';
+		liInput1.style.width= '50%';
+		listLi.appendChild(liInput1);
+		let removeB = document.createElement('button');
+		var removeButtonText = document.createTextNode("-");
+		removeB.appendChild(removeButtonText);
+		removeB.addEventListener('click', (e:Event) => {
+			var temp= (e.target as HTMLElement).parentElement as HTMLElement;
+			temp.remove();
+		});
+		listLi.appendChild(removeB);
+		let liInput2 = document.createElement("input");
+		liInput2.className = 'endpointMethod';
+		liInput2.placeholder= 'Endpoint Method';
+		listLi.appendChild(liInput2);
+		listEndpoints?.appendChild(listLi);
+	}
 
 	//click for menu item
 	protected clickMenu(menuItem: string, divId:string): void {
@@ -150,6 +202,26 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		else{
 			(document.getElementById("interestProjectToken") as HTMLElement).style.display = "none";
 			SmartclideTdReusabilityTheiaWidget.state.InterestProjectHasToken= 'no';
+		}
+	 }
+
+	 //update the state for checkbox
+	 onCheckBoxChangePrincipalManualEndpoints(e: React.ChangeEvent<HTMLInputElement>) {
+		if(e.target.checked){
+			(document.getElementById("listManualEndpoints") as HTMLElement).style.display = "block";
+		}
+		else{
+			(document.getElementById("listManualEndpoints") as HTMLElement).style.display = "none";
+		}
+	 }
+
+	 //update visibility of Token field
+	 onCheckBoxChangePrincipalPrivate(e: React.ChangeEvent<HTMLInputElement>) {
+		if(e.target.checked){
+			(document.getElementById("principalProjectToken") as HTMLElement).style.display = "block";
+		}
+		else{
+			(document.getElementById("principalProjectToken") as HTMLElement).style.display = "none";
 		}
 	 }
 

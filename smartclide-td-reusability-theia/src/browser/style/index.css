@@ -31,7 +31,7 @@
   	background-color: #5a5a5a;
 }
 
-#widget-container-TDReusability > .active {
+#widget-container-TDReusability .active {
   	background-color: #5a5a5a;
 }
 
@@ -46,23 +46,26 @@
 	background: transparent;
   	border: none;
   	color: white;
-  	width: 50%;
+  	width: 95%;
 }
 
 /* TD Principal */
-#TDIndex{
+#endpointResultsList{
 	display: none;
 	margin-left: 10px;
 }
 
-#issuesNumber{
+#listManualEndpoints{
 	display: none;
-	margin-left: 10px;
-  	margin-bottom: auto;
 }
 
-#issues{
-	margin-left: 10px;
+.checkboxLabel {
+	display: block;
+	margin-top: 10px;
+}
+
+#TdProjectResults{
+	display: none;
 }
 
 .divIssue{
@@ -104,7 +107,7 @@
 	font-style: italic;
 }
 
-#widget-container-TDReusability > input[type='checkbox']{
+#widget-container-TDReusability input[type='checkbox']{
 	width: auto !important;
 }
 
@@ -193,4 +196,32 @@
 	color: #777;
 	text-align: center;
 	cursor: pointer;
+}
+
+
+/* waiting animation */
+.lds-dual-ring {
+	display: none;
+    margin-left: 5px;
+	width: 60px;
+	height: 50px;
+}
+.lds-dual-ring:after {
+	content: " ";
+	display: block;
+	width: 30px;
+	height: 30px;
+	margin: 8px;
+	border-radius: 50%;
+	border: 4px solid #fff;
+	border-color: #fff transparent #fff transparent;
+	animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+	0% {
+	  transform: rotate(0deg);
+	}
+	100% {
+	  transform: rotate(360deg);
+	}
 }
