@@ -45,8 +45,13 @@ export class Reusability {
 
         //Get only last commit index
         fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
-                '/api/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL
-                    , {mode: 'cors'})
+                '/api/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
+				{
+					mode: 'cors',
+					headers: {
+						'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
+					}
+				})
             .then(res => res.json())
             .then((out) => {
                 var obj= JSON.parse(JSON.stringify(out));
@@ -75,8 +80,13 @@ export class Reusability {
 
     static async getAllReusabilityIndexes<T>(): Promise<T> {
         const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
-            '/api/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL
-                , {mode: 'cors'});
+            '/api/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
+			{
+				mode: 'cors',
+				headers: {
+					'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
+				}
+			});
         const body = await response.json();
         console.log("All Reusability indexes fetched");
         return body;
@@ -85,8 +95,13 @@ export class Reusability {
     //Get Reusability of Files
 	runprocessGetFiles(sha: string, limit: number){
 		fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
-				'/api/reusabilityIndexByCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL
-					+'&sha='+sha+'&limit='+limit, {mode: 'cors'})
+				'/api/reusabilityIndexByCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL+'&sha='+sha+'&limit='+limit, 
+					{
+						mode: 'cors',
+						headers: {
+							'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
+						}
+					})
 			.then(res => res.json())
 			.then((out) => {
 				var obj= JSON.parse(JSON.stringify(out));

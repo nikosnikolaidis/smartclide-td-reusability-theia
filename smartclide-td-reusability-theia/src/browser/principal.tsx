@@ -219,6 +219,7 @@ export class Principal {
             '/api/analysis/endpoints', { method: 'post',
 			headers: {
 				'Accept': '*/*',
+				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
 				'Access-Control-Allow-Origin': '*',
 				'Content-Type':  'application/json'
 			},
@@ -234,6 +235,7 @@ export class Principal {
             '/api/analysis/endpoints/auto', { method: 'post',
 			headers: {
 				'Accept': '*/*',
+				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
 				'Access-Control-Allow-Origin': '*',
 				'Content-Type':  'application/json'
 			},
@@ -253,7 +255,13 @@ export class Principal {
 			//var projectName= temp[temp.length-1];
 			var projectName= SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey;
 			//GET measures TD and number of issues
-			fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/api/analysis/'+ projectName +'/measures', {mode: 'cors'})
+			fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/api/analysis/'+ projectName +'/measures', 
+				{
+					mode: 'cors',
+					headers: {
+						'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
+					}
+				})
 				.then(res => res.json())
 				.then((out) => {
 					var obj= JSON.parse(JSON.stringify(out));
@@ -309,7 +317,13 @@ export class Principal {
 		var projectName= SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey;
 
 		//GET
-		fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/api/analysis/'+ projectName +'/issues', {mode: 'cors'})
+		fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/api/analysis/'+ projectName +'/issues', 
+			{
+				mode: 'cors',
+				headers: {
+					'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
+				}
+			})
 			.then(res => res.json())
 			.then((out) => {
 				var obj= JSON.parse(JSON.stringify(out));
@@ -387,6 +401,7 @@ export class Principal {
 				'/api/analysis', { method: 'post',
 			headers: {
 				'Accept': '*/*',
+				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
 				'Access-Control-Allow-Origin': '*',
 				'Content-Type':  'application/json'
 			}, body: JSON.stringify(data)

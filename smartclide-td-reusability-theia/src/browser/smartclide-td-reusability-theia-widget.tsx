@@ -38,7 +38,8 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		PrincipalSonarQubeProjectKey: '',
 		InterestFileNumber: '',
 		ReusabilityServiceURL: '',
-		ReusabilityProjectURL: ''
+		ReusabilityProjectURL: '',
+		stateKeycloakToken: ''
 	}
 	
 	static statePrincipalEndpoints=[{fileName: '', endpointMethod: ''}]

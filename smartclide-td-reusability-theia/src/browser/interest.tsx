@@ -25,7 +25,12 @@ export class Interest {
 		//GET
 		fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
 				'/api/cumulativeInterest?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
-					, {mode: 'cors'})
+					, {
+					mode: 'cors',
+					headers: {
+						'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
+					}
+				})
 			.then(res => res.json())
 			.then((out) => {
 				var obj= JSON.parse(JSON.stringify(out));
@@ -70,7 +75,13 @@ export class Interest {
 	runprocessGetChange(sha: string){
 		fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
 				'/api/interestChange?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
-					+'&sha='+sha, {mode: 'cors'})
+					+'&sha='+sha, 
+					{
+						mode: 'cors',
+						headers: {
+						'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
+						}
+					})
 			.then(res => res.json())
 			.then((out) => {
 				var obj= JSON.parse(JSON.stringify(out));
@@ -94,7 +105,13 @@ export class Interest {
 	runprocessGetFiles(sha: string, limit: number){
 		fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
 				'/api/highInterestFiles?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
-					+'&sha='+sha+'&limit='+limit, {mode: 'cors'})
+					+'&sha='+sha+'&limit='+limit, 
+					{
+						mode: 'cors',
+						headers: {
+							'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
+						}
+					})
 			.then(res => res.json())
 			.then((out) => {
 				var obj= JSON.parse(JSON.stringify(out));
@@ -162,6 +179,7 @@ export class Interest {
             '/api/startInterestAnalysis', { method: 'post',
 			headers: {
 				'Accept': '*/*',
+				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
 				'Access-Control-Allow-Origin': '*',
 				'Content-Type':  'application/json'
 			},
