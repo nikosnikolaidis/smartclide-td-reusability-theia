@@ -19,6 +19,7 @@ import { Principal} from './principal';
 import { Reusability} from './reusability';
 import Chart from './chart';
 import ReactDOM = require('react-dom');
+import { messageTypes, buildMessage } from '@unparallel/smartclide-frontend-comm';
 
 
 @injectable()
@@ -52,6 +53,21 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		data: [{ x: 0, y: 0 }]
 	}
 
+	//Handle TOKEN_INFO message from parent
+	handleTokenInfo = ({data}:any) => {
+		switch (data.type) {
+		  case messageTypes.TOKEN_INFO:
+			console.log("td-reusability: RECEIVED", JSON.stringify(data, undefined, 4));
+			SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken = data.content;
+			break;
+		  case messageTypes.TOKEN_REVOKE:
+			console.log("td-reusability: RECEIVED", JSON.stringify(data, undefined, 4));
+			window.removeEventListener("message", this.handleTokenInfo);
+			break;
+		  default:
+			break;
+		}
+	}
 
     @inject(MessageService)
     protected readonly messageService!: MessageService;
@@ -64,6 +80,13 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
         this.title.closable = true;
         this.title.iconClass = 'fa fa-eur';
         this.update();
+
+		//Add even listener to get the Keycloak Token
+		window.addEventListener("message", this.handleTokenInfo);
+
+		//Send a message to inform SmartCLIDE IDE
+		let message = buildMessage(messageTypes.COMPONENT_HELLO);
+		window.parent.postMessage(message, "*");
     }
 
     protected render(): React.ReactNode {
