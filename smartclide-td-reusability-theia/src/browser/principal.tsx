@@ -192,12 +192,13 @@ export class Principal {
 				//var debt= i.debt;
 				var re = /(.*)[:]/;
 				var component = issue.issueDirectory.replace(re, "");
+				var line = issue.issueStartLine;
 
 				let divIssue = document.createElement("div");
 				divIssue.className = 'divIssue';
 
 				let nodeComponent = document.createElement("i");
-				nodeComponent.appendChild(document.createTextNode(component));
+				nodeComponent.appendChild(document.createTextNode(component+"\xa0\xa0\xa0L:"+ line));
 				let nodeSeverity = document.createElement("span");
 				nodeSeverity.appendChild(document.createTextNode(severity));
 				let nodeMessage = document.createElement("p");
@@ -338,13 +339,14 @@ export class Principal {
 					//var debt= i.debt;
 					var re = /(.*)[:]/;
 					var component= i.issueDirectory.replace(re, "");
+					var line = i.issueStartLine;
 					
 					let issuesDiv = document.getElementById('issues')!
 					let divIssue = document.createElement("div");
 					divIssue.className = 'divIssue';
 					
 					let nodeComponent = document.createElement("i");
-					nodeComponent.appendChild(document.createTextNode(component));
+					nodeComponent.appendChild(document.createTextNode(component+"\xa0\xa0\xa0L:"+line));
 					let nodeSeverity = document.createElement("span");
 					nodeSeverity.appendChild(document.createTextNode(severity));
 					let nodeMessage = document.createElement("p");
