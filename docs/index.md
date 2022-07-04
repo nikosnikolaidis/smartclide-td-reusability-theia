@@ -3,7 +3,7 @@ SmartCLIDE TD Principal-Interest & Reusability Frontend Component
 
 ## Preconditions to build and run TD Principal-Interest & Reusability Frontend
 
-To build and run the backend service of TD Principal, the following software is required:
+To build and run the frontend of TD Principal-Interest & Reusability, the following software is required:
 
 - Python
 - Node.js with visual studio build tools (this can be selected in the optional tools during the node.js installation or after hand in several ways, ex. with npm, or with visual studio installer)
