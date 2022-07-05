@@ -9,7 +9,6 @@
     "src"
   ],
   "dependencies": {
-    "victory": "^36.2.0",
     "@theia/core": "latest",
     "@unparallel/smartclide-frontend-comm": "0.4.0"
   },
@@ -24,7 +23,6 @@
     "watch": "tsc -w"
   },
   "license": "EPL-2.0",
-  "resolutions": { "@types/react": "^16.8.0" },
   "theiaExtensions": [
     {
       "frontend": "lib/browser/smartclide-td-reusability-theia-frontend-module"

@@ -16,8 +16,8 @@ import { MessageService } from '@theia/core';
 import { Interest} from './interest';
 import { Principal} from './principal';
 import { Reusability} from './reusability';
-import Chart from './chart';
-import ReactDOM = require('react-dom');
+//import Chart from './chart';
+//import ReactDOM = require('react-dom');
 import { messageTypes, buildMessage } from '@unparallel/smartclide-frontend-comm';
 
 
@@ -252,13 +252,13 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 
 	//create chart Interest
 	static createChartInterest():void{
-		var chart= <Chart data={SmartclideTdReusabilityTheiaWidget.stateInterest.data} />;
-		ReactDOM.render(chart, document.getElementById("chartInterest"));
+		//var chart= <Chart data={SmartclideTdReusabilityTheiaWidget.stateInterest.data} />;
+		//ReactDOM.render(chart, document.getElementById("chartInterest"));
 	}
 
 	//create chart Reusability
 	static createChartReusability(){
-		var chart= <Chart data={SmartclideTdReusabilityTheiaWidget.stateReusability.data} />;
-		ReactDOM.render(chart, document.getElementById("chartReusability"));
+		//var chart= <Chart data={SmartclideTdReusabilityTheiaWidget.stateReusability.data} />;
+		//ReactDOM.render(chart, document.getElementById("chartReusability"));
 	}
 }

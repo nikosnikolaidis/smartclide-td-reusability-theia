@@ -16,9 +16,7 @@
     "browser-app",
     "electron-app"
   ],
-  "resolutions": { "@types/react": "^16.8.0" },
   "dependencies": {
-    "inversify": "^5.1.1",
-    "victory": "^36.2.0"
+    "inversify": "^5.1.1"
   }
 }

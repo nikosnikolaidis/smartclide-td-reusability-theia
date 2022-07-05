@@ -7,7 +7,7 @@
  * 
  * SPDX-License-Identifier: EPL-2.0
  ******************************************************************************/
-import * as React from 'react';
+/*import * as React from 'react';
 import { VictoryChart, VictoryLine, VictoryTheme, VictoryZoomContainer } from 'victory';
 
 interface Props {
@@ -50,3 +50,4 @@ export class Chart extends React.Component<Props,IState> {
   }
 
   export default Chart;
+*/
