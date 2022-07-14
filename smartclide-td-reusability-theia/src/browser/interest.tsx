@@ -24,7 +24,7 @@ export class Interest {
 	runprocessGetInterest(messageService: MessageService){
 		//GET
 		fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
-				'/api/cumulativeInterest?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
+				'/cumulativeInterest?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
 					, {
 					mode: 'cors',
 					headers: {
@@ -71,7 +71,7 @@ export class Interest {
 	//Get change of Interest in last commit
 	runprocessGetChange(sha: string){
 		fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
-				'/api/interestChange?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
+				'/interestChange?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
 					+'&sha='+sha, 
 					{
 						mode: 'cors',
@@ -101,7 +101,7 @@ export class Interest {
 	//Get Interest of Files
 	runprocessGetFiles(sha: string, limit: number){
 		fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
-				'/api/highInterestFiles?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
+				'/highInterestFiles?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
 					+'&sha='+sha+'&limit='+limit, 
 					{
 						mode: 'cors',
@@ -173,7 +173,7 @@ export class Interest {
 	//Send Analysis with or without token
 	static async postInteresAnalysis<T>(data: { url: string; } | { url: string; token: string; }): Promise<T> {
 		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
-            '/api/startInterestAnalysis', { method: 'post',
+            '/startInterestAnalysis', { method: 'post',
 			headers: {
 				'Accept': '*/*',
 				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,

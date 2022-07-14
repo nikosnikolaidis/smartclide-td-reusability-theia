@@ -217,7 +217,7 @@ export class Principal {
 	static async postPrincipalManualEndpoints<T>(data: { sonarQubeProjectKey:string; gitUrl:string; gitToken:string; 
 							requestBodyEachEndpointList:{fileName:string; endpointMethod:string}[];} ): Promise<T> {
 		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+
-            '/api/analysis/endpoints', { method: 'post',
+            '/analysis/endpoints', { method: 'post',
 			headers: {
 				'Accept': '*/*',
 				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
@@ -233,7 +233,7 @@ export class Principal {
 
 	static async postPrincipalEndpoints<T>(data: { sonarQubeProjectKey:string; gitUrl:string; gitToken:string; }): Promise<T>{
 		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+
-            '/api/analysis/endpoints/auto', { method: 'post',
+            '/analysis/endpoints/auto', { method: 'post',
 			headers: {
 				'Accept': '*/*',
 				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
@@ -256,7 +256,7 @@ export class Principal {
 			//var projectName= temp[temp.length-1];
 			var projectName= SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey;
 			//GET measures TD and number of issues
-			fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/api/analysis/'+ projectName +'/measures', 
+			fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/analysis/'+ projectName +'/measures', 
 				{
 					mode: 'cors',
 					headers: {
@@ -318,7 +318,7 @@ export class Principal {
 		var projectName= SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey;
 
 		//GET
-		fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/api/analysis/'+ projectName +'/issues', 
+		fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/analysis/'+ projectName +'/issues', 
 			{
 				mode: 'cors',
 				headers: {
@@ -400,7 +400,7 @@ export class Principal {
 
 	static async postPrincipalNewAnalysis(data: { gitURL:string; } ): Promise<number> {
 		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+
-				'/api/analysis', { method: 'post',
+				'/analysis', { method: 'post',
 			headers: {
 				'Accept': '*/*',
 				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,

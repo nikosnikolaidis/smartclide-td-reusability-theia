@@ -42,7 +42,7 @@ export class Reusability {
 
         //Get only last commit index
         fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
-                '/api/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
+                '/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
 				{
 					mode: 'cors',
 					headers: {
@@ -77,7 +77,7 @@ export class Reusability {
 
     static async getAllReusabilityIndexes<T>(): Promise<T> {
         const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
-            '/api/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
+            '/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
 			{
 				mode: 'cors',
 				headers: {
@@ -92,7 +92,7 @@ export class Reusability {
     //Get Reusability of Files
 	runprocessGetFiles(sha: string, limit: number){
 		fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
-				'/api/reusabilityIndexByCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL+'&sha='+sha+'&limit='+limit, 
+				'/reusabilityIndexByCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL+'&sha='+sha+'&limit='+limit, 
 					{
 						mode: 'cors',
 						headers: {
