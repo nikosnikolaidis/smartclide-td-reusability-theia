@@ -21,6 +21,7 @@ import { Reusability} from './reusability';
 import ResizeObserver from 'react-resize-observer';
 import * as echarts from 'echarts';
 import { messageTypes, buildMessage } from '@unparallel/smartclide-frontend-comm';
+import { Message } from '@theia/core/lib/browser';
 
 
 @injectable()
@@ -91,6 +92,12 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		let message = buildMessage(messageTypes.COMPONENT_HELLO);
 		window.parent.postMessage(message, "*");
     }
+
+	//After Detach Remove Listener
+	protected onAfterDetach(msg: Message): void {
+		window.removeEventListener("message", this.handleTokenInfo);
+		super.onAfterDetach(msg);
+	}
 
     protected render(): React.ReactNode {
         const header = `Provide SonarQube URL instance and get latest results.`;
