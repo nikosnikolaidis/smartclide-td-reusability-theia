@@ -25,17 +25,14 @@ export class Reusability {
 
         //SmartclideTdReusabilityTheiaWidget.stateReusability.data = await Reusability.getAllReusabilityIndexes();
         //remove previous
-        var lengthData= SmartclideTdReusabilityTheiaWidget.stateReusability.data.length;
-        for(let count=0; count<lengthData; count++){
-            SmartclideTdReusabilityTheiaWidget.stateReusability.data.pop();
-        }
+		SmartclideTdReusabilityTheiaWidget.stateReusability.data=[];
 
         //call async for all indexes
         (async () => {
             try {
 				var tempTable= await Reusability.getAllReusabilityIndexes<projectReusabilityInfo[]>();
 				for(var temp1 of tempTable){
-					SmartclideTdReusabilityTheiaWidget.stateReusability.data.push({x:temp1.revisionCount, y:temp1.index})
+					SmartclideTdReusabilityTheiaWidget.stateReusability.data.push([temp1.revisionCount, temp1.index]);
 				}
                 //SmartclideTdReusabilityTheiaWidget.stateReusability.data = await Reusability.getAllReusabilityIndexes<projectReusabilityInfo[]>();
                 SmartclideTdReusabilityTheiaWidget.createChartReusability();
@@ -157,9 +154,9 @@ export class Reusability {
 	runprocessShowEvolution(){
 		var inner= (document.getElementById('reusability-ShowHideChart') as HTMLElement).innerHTML;
 		if (inner=='Show Evolution'){
-			SmartclideTdReusabilityTheiaWidget.createChartReusability();
 			(document.getElementById('reusability-ShowHideChart') as HTMLElement).innerHTML= 'Hide Evolution';
 			(document.getElementById('chartReusability') as HTMLElement).style.display = "block";
+			SmartclideTdReusabilityTheiaWidget.createChartReusability();
 		}
 		else{
 			(document.getElementById('reusability-ShowHideChart') as HTMLElement).innerHTML= 'Show Evolution';

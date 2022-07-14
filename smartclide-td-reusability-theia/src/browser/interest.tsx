@@ -35,10 +35,7 @@ export class Interest {
 			.then((out) => {
 				var obj= JSON.parse(JSON.stringify(out));
 				//remove previous
-				var lengthData= SmartclideTdReusabilityTheiaWidget.stateInterest.data.length;
-				for(let count=0; count<lengthData; count++){
-					SmartclideTdReusabilityTheiaWidget.stateInterest.data.pop();
-				}
+				SmartclideTdReusabilityTheiaWidget.stateInterest.data=[];
 				
 				//add interest to data for chart
 				var tempInterest=0;
@@ -48,7 +45,7 @@ export class Interest {
 					tempInterest= i.interestEu;
 					lastSha= i.sha;
 					tempInterestHours= i.interestHours;
-					SmartclideTdReusabilityTheiaWidget.stateInterest.data.push({x:i.revisionCount, y:i.interestEu});
+					SmartclideTdReusabilityTheiaWidget.stateInterest.data.push([i.revisionCount, i.interestEu]);
 				}
 				console.log('last sha: '+lastSha);
 				(document.getElementById('interest-buttons') as HTMLElement).style.display = "block";
@@ -207,9 +204,9 @@ export class Interest {
 	runprocessShowEvolution(){
 		var inner= (document.getElementById('interest-ShowHideChart') as HTMLElement).innerHTML;
 		if (inner=='Show Evolution'){
-			SmartclideTdReusabilityTheiaWidget.createChartInterest();
 			(document.getElementById('interest-ShowHideChart') as HTMLElement).innerHTML= 'Hide Evolution';
 			(document.getElementById('chartInterest') as HTMLElement).style.display = "block";
+			SmartclideTdReusabilityTheiaWidget.createChartInterest();
 		}
 		else{
 			(document.getElementById('interest-ShowHideChart') as HTMLElement).innerHTML= 'Show Evolution';

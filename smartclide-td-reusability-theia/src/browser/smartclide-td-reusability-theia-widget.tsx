@@ -18,6 +18,8 @@ import { Principal} from './principal';
 import { Reusability} from './reusability';
 //import Chart from './chart';
 //import ReactDOM = require('react-dom');
+import ResizeObserver from 'react-resize-observer';
+import * as echarts from 'echarts';
 import { messageTypes, buildMessage } from '@unparallel/smartclide-frontend-comm';
 
 
@@ -45,12 +47,14 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 	static statePrincipalEndpoints=[{fileName: '', endpointMethod: ''}]
 	
 	static stateInterest ={
-		data: [{ x: 0, y: 0 }]
+		data: [[0, 0]]
 	}
 	
 	static stateReusability ={
-		data: [{ x: 0, y: 0 }]
+		data: [[0, 0]]
 	}
+
+	static myChart:any;
 
 	//Handle TOKEN_INFO message from parent
 	handleTokenInfo = ({data}:any) => {
@@ -98,6 +102,9 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		const reusabilityInstance= new Reusability();
 
         return <div id='widget-container-TDReusability'>
+			<ResizeObserver
+				onResize={(rect) => SmartclideTdReusabilityTheiaWidget.resizeChart()}
+			/>
 			<ul>
 				<li><span id='menuPrincipal' className='active' onClick={_a => this.clickMenu('menuPrincipal','td-principal')}>TD Principal</span></li>
 				<li><span id='menuInterest' onClick={_a => this.clickMenu('menuInterest','td-interest')}>TD Interest</span></li>
@@ -254,11 +261,135 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 	static createChartInterest():void{
 		//var chart= <Chart data={SmartclideTdReusabilityTheiaWidget.stateInterest.data} />;
 		//ReactDOM.render(chart, document.getElementById("chartInterest"));
+		(document.getElementById('chartInterest') as HTMLElement).style.display = "block";
+		// SmartclideTdReusabilityTheiaWidget.stateInterest.data=[];
+		// for(var i=0;i<2000;i++){
+		// 	SmartclideTdReusabilityTheiaWidget.stateInterest.data.push([i,i]);
+		// }
+		this.createChart(SmartclideTdReusabilityTheiaWidget.stateInterest.data, "chartInterest", "Interest");
 	}
 
 	//create chart Reusability
 	static createChartReusability(){
 		//var chart= <Chart data={SmartclideTdReusabilityTheiaWidget.stateReusability.data} />;
 		//ReactDOM.render(chart, document.getElementById("chartReusability"));
+		(document.getElementById('chartReusability') as HTMLElement).style.display = "block";
+		this.createChart(SmartclideTdReusabilityTheiaWidget.stateReusability.data, "chartReusability", "Reusability");
+	}
+
+	static resizeChart(){
+		if((document.getElementById('chartInterest') as HTMLElement).style.display === "block" ||
+		   (document.getElementById('chartReusability') as HTMLElement).style.display === "block")
+		{
+			SmartclideTdReusabilityTheiaWidget.myChart.resize();
+		}
+	}
+
+	static createChart(data:number[][], id:string, type:string){
+		type EChartsOption = echarts.EChartsOption;
+		if(SmartclideTdReusabilityTheiaWidget.myChart !== undefined){
+			SmartclideTdReusabilityTheiaWidget.myChart.dispose();
+		}
+		var chartDom = document.getElementById(id)!;
+		SmartclideTdReusabilityTheiaWidget.myChart = echarts.init(chartDom);
+		var option: EChartsOption;
+
+		option = {
+			tooltip: {
+				triggerOn: 'none'
+			},
+			toolbox: {
+				left: 'center',
+				itemSize: 25,
+				top: 0,
+				feature: {
+				dataZoom: {
+					yAxisIndex: 'none'
+				},
+				restore: {}
+				}
+			},
+			xAxis: {
+				type: 'value',
+				min: 1,
+				axisPointer: {
+				snap: true,
+				lineStyle: {
+					color: '#7581BD',
+					width: 2
+				},
+				label: {
+					show: true,
+					formatter: function (params) {
+					return 'commit: ' + params.value;
+					},
+					backgroundColor: '#7581BD'
+				},
+				handle: {
+					show: true,
+					size: 30,
+					color: '#7581BD'
+				}
+				},
+				splitLine: {
+				show: false
+				}
+			},
+			yAxis: {
+				type: 'value',
+				axisTick: {
+				inside: true
+				},
+				splitLine: {
+				show: false
+				},
+				axisLabel: {
+				inside: true,
+				formatter: '{value}\n'
+				},
+				z: 10
+			},
+			grid: {
+				top: 50,
+				left: 15,
+				right: 15,
+				height: 280
+			},
+			dataZoom: [
+				{
+				type: 'inside',
+				throttle: 50
+				}
+			],
+			series: [
+				{
+					name: type,
+					type: 'line',
+					smooth: true,
+					symbol: 'circle',
+					symbolSize: 5,
+					sampling: 'average',
+					itemStyle: {
+						color: '#0770FF'
+					},
+					stack: 'a',
+					areaStyle: {
+						color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+						{
+							offset: 0,
+							color: 'rgba(58,77,233,0.8)'
+						},
+						{
+							offset: 1,
+							color: 'rgba(58,77,233,0.3)'
+						}
+						])
+					},
+					data: data
+				}
+			]
+		};
+
+		option && SmartclideTdReusabilityTheiaWidget.myChart.setOption(option);
 	}
 }
