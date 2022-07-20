@@ -258,7 +258,7 @@ export class Principal {
 			//GET measures TD and number of issues
 			fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/analysis/'+ projectName +'/measures', 
 				{
-					mode: 'cors',
+					mode: 'no-cors',
 					headers: {
 						'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
 					}
