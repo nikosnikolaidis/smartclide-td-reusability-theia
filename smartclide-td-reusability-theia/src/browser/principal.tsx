@@ -258,8 +258,9 @@ export class Principal {
 			//GET measures TD and number of issues
 			fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/analysis/'+ projectName +'/measures', 
 				{
-					mode: 'no-cors',
 					headers: {
+						'Accept': '*/*',
+						'Access-Control-Allow-Origin': "*",
 						'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
 					}
 				})
