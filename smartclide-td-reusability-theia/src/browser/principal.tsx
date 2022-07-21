@@ -256,6 +256,7 @@ export class Principal {
 			//var projectName= temp[temp.length-1];
 			var projectName= SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey;
 			//GET measures TD and number of issues
+			console.log("token: "+SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken);
 			fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/analysis/'+ projectName +'/measures', 
 				{
 					headers: {
