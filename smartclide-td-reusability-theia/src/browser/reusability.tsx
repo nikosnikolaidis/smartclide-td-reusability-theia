@@ -41,11 +41,13 @@ export class Reusability {
 
 
         //Get only last commit index
-        fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
-                '/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
+        fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+                '/td-reusability/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
 				{
-					mode: 'cors',
+					method: 'get',
 					headers: {
+						'Accept': '*/*',
+						'Access-Control-Allow-Origin': '*',
 						'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
 					}
 				})
@@ -76,11 +78,13 @@ export class Reusability {
     }
 
     static async getAllReusabilityIndexes<T>(): Promise<T> {
-        const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
-            '/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
+        const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+            '/td-reusability/projectReusabilityIndexPerCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL, 
 			{
-				mode: 'cors',
+				method: 'get',
 				headers: {
+					'Accept': '*/*',
+					'Access-Control-Allow-Origin': '*',
 					'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
 				}
 			});
@@ -91,11 +95,13 @@ export class Reusability {
 
     //Get Reusability of Files
 	runprocessGetFiles(sha: string, limit: number){
-		fetch(SmartclideTdReusabilityTheiaWidget.state.ReusabilityServiceURL+
-				'/reusabilityIndexByCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL+'&sha='+sha+'&limit='+limit, 
+		fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+				'/td-reusability/reusabilityIndexByCommit?url='+SmartclideTdReusabilityTheiaWidget.state.ReusabilityProjectURL+'&sha='+sha+'&limit='+limit, 
 					{
-						mode: 'cors',
+						method: 'get',
 						headers: {
+							'Accept': '*/*',
+							'Access-Control-Allow-Origin': '*',
 							'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
 						}
 					})

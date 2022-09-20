@@ -31,16 +31,14 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
     static readonly LABEL = 'Smartclide TD and Reusability';
 	
 	static state = {
-		PrincipalServiceURL: '',
+		BackEndHost: 'https://api.dev.smartclide.eu',
 		PrincipalProjectURL: '',
-		InterestServiceURL: '',
 		InterestProjectURL: '',
 		InterestProjectHasToken: '',
 		InterestProjectToken: '',
 		PrincipalProjectToken: '',
 		PrincipalSonarQubeProjectKey: '',
 		InterestFileNumber: '',
-		ReusabilityServiceURL: '',
 		ReusabilityProjectURL: '',
 		stateKeycloakToken: ''
 	}
@@ -119,7 +117,6 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 			</ul>
 			<div id='td-principal'>
 				<AlertMessage type='INFO' header={header} />
-				<input onChange={this.updateInput} placeholder='Principal Service URL' name='PrincipalServiceURL'/>
 				<input onChange={this.updateInput} placeholder='Project URL' name='PrincipalProjectURL'/>
 				<input id='principalSonarQubeProjectKey' onChange={this.updateInput} placeholder='SonarQube Project Key' name='PrincipalSonarQubeProjectKey'/>
 				<label className='checkboxLabel'>
@@ -152,7 +149,6 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 			</div>
 			<div id='td-interest'>
 				<AlertMessage type='INFO' header={header2} />
-				<input onChange={this.updateInput} placeholder='Interest Service URL' name='InterestServiceURL'/>
 				<input onChange={this.updateInput} placeholder='Project URL' name='InterestProjectURL'/>
 				<label className='checkboxLabel'>
 					<input type="checkbox" onChange={this.onCheckBoxChange}/>Is private (for new analysis)
@@ -170,7 +166,6 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 			</div>
 			<div id='reusability'>
 				<AlertMessage type='INFO' header={header3} />
-				<input onChange={this.updateInput} placeholder='Reusability Service URL' name='ReusabilityServiceURL'/>
 				<input onChange={this.updateInput} placeholder='Project URL' name='ReusabilityProjectURL'/>
 				<button className='theia-button secondary' title='Load Reusability' onClick={_a => reusabilityInstance.runprocessLoadReusability(this.messageService)}>Load Reusability</button>
 				<p id='indexReusability'></p>

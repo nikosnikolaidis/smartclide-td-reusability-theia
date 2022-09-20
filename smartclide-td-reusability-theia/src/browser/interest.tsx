@@ -23,11 +23,13 @@ export class Interest {
 	//Get Interest for chart
 	runprocessGetInterest(messageService: MessageService){
 		//GET
-		fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
-				'/cumulativeInterest?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
+		fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+				'/td-interest/cumulativeInterest?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
 					, {
-					mode: 'cors',
+					method: 'get',
 					headers: {
+						'Accept': '*/*',
+						'Access-Control-Allow-Origin': '*',
 						'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
 					}
 				})
@@ -70,13 +72,15 @@ export class Interest {
 	
 	//Get change of Interest in last commit
 	runprocessGetChange(sha: string){
-		fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
-				'/interestChange?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
+		fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+				'/td-interest/interestChange?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
 					+'&sha='+sha, 
 					{
-						mode: 'cors',
+						method: 'get',
 						headers: {
-						'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
+							'Accept': '*/*',
+							'Access-Control-Allow-Origin': '*',
+							'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
 						}
 					})
 			.then(res => res.json())
@@ -100,12 +104,14 @@ export class Interest {
 	
 	//Get Interest of Files
 	runprocessGetFiles(sha: string, limit: number){
-		fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
-				'/highInterestFiles?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
+		fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+				'/td-interest/highInterestFiles?url='+SmartclideTdReusabilityTheiaWidget.state.InterestProjectURL
 					+'&sha='+sha+'&limit='+limit, 
 					{
-						mode: 'cors',
+						method: 'get',
 						headers: {
+							'Accept': '*/*',
+							'Access-Control-Allow-Origin': '*',
 							'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
 						}
 					})
@@ -172,8 +178,8 @@ export class Interest {
 
 	//Send Analysis with or without token
 	static async postInteresAnalysis<T>(data: { url: string; } | { url: string; token: string; }): Promise<T> {
-		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.InterestServiceURL+
-            '/startInterestAnalysis', { method: 'post',
+		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+            '/td-interest/startInterestAnalysis', { method: 'post',
 			headers: {
 				'Accept': '*/*',
 				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,

@@ -35,8 +35,7 @@ interface principalEnpointReport {
 export class Principal {
 
 	runprocessGetMetricsEndpoint(messageService: MessageService): void {
-		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL!='' &&
-					SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL!='' &&
+		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL!='' &&
 					SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectToken!='' &&
 					SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey!=''){
 			//remove previous
@@ -216,8 +215,8 @@ export class Principal {
 
 	static async postPrincipalManualEndpoints<T>(data: { sonarQubeProjectKey:string; gitUrl:string; gitToken:string; 
 							requestBodyEachEndpointList:{fileName:string; endpointMethod:string}[];} ): Promise<T> {
-		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+
-            '/analysis/endpoints', { method: 'post',
+		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+            '/td-principal/analysis/endpoints', { method: 'post',
 			headers: {
 				'Accept': '*/*',
 				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
@@ -232,8 +231,8 @@ export class Principal {
     }
 
 	static async postPrincipalEndpoints<T>(data: { sonarQubeProjectKey:string; gitUrl:string; gitToken:string; }): Promise<T>{
-		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+
-            '/analysis/endpoints/auto', { method: 'post',
+		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+            '/td-principal/analysis/endpoints/auto', { method: 'post',
 			headers: {
 				'Accept': '*/*',
 				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
@@ -250,15 +249,16 @@ export class Principal {
     //Get metrics for TD principal
     runprocessGetMetrics(messageService: MessageService): void {
 		//if field has value
-		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL!=''){
-			console.log('url: '+ SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL);
+		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey!=''){
+			console.log('url: '+ SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey);
 			//var temp= SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL.replace('.git','').split('/');
 			//var projectName= temp[temp.length-1];
 			var projectName= SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey;
 			//GET measures TD and number of issues
 			console.log("token: "+SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken);
-			fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/analysis/'+ projectName +'/measures', 
+			fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+'/td-principal/analysis/'+ projectName +'/measures', 
 				{
+					method: 'get',
 					headers: {
 						'Accept': '*/*',
 						'Access-Control-Allow-Origin': "*",
@@ -320,10 +320,12 @@ export class Principal {
 		var projectName= SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey;
 
 		//GET
-		fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+'/analysis/'+ projectName +'/issues', 
+		fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+'/td-principal/analysis/'+ projectName +'/issues', 
 			{
-				mode: 'cors',
+				method: 'get',
 				headers: {
+					'Accept': '*/*',
+					'Access-Control-Allow-Origin': '*',
 					'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken
 				}
 			})
@@ -367,8 +369,7 @@ export class Principal {
 
 	//Make new analysis
 	runprocessNewAnalysis(messageService: MessageService): void {
-		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL!='' &&
-					SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL!=''){
+		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL!=''){
 			messageService.info('Starting new analysis');
 			//waiting animation start
 			(document.getElementById("waitAnimation") as HTMLElement).style.display = "block";
@@ -401,8 +402,8 @@ export class Principal {
 	}
 
 	static async postPrincipalNewAnalysis(data: { gitURL:string; } ): Promise<number> {
-		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.PrincipalServiceURL+
-				'/analysis', { method: 'post',
+		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+				'/td-principal/analysis', { method: 'post',
 			headers: {
 				'Accept': '*/*',
 				'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
