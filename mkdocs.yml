@@ -1,5 +1,5 @@
 site_name: SmartCLIDE TD & Reusability Frontend Component
-repo_url: https://github.com/eclipse-researchlabs/smartclide-td-reusability-theia
+repo_url: https://github.com/eclipse-opensmartclide/smartclide-td-reusability-theia
 
 nav:
   - TD & Reusability Frontend: 'index.md'
