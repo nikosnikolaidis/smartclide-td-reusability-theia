@@ -18,7 +18,7 @@ import { Principal} from './principal';
 import { Reusability} from './reusability';
 //import Chart from './chart';
 //import ReactDOM = require('react-dom');
-import ResizeObserver from 'react-resize-observer';
+//import ResizeObserver from 'react-resize-observer';
 import * as echarts from 'echarts';
 import { messageTypes, buildMessage } from '@unparallel/smartclide-frontend-comm';
 import { Message } from '@theia/core/lib/browser';
@@ -106,10 +106,13 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		const principalInstance= new Principal();
 		const reusabilityInstance= new Reusability();
 
-        return <div id='widget-container-TDReusability'>
-			<ResizeObserver
+		/**
+		 	<ResizeObserver
 				onResize={(rect) => SmartclideTdReusabilityTheiaWidget.resizeChart()}
 			/>
+		 */
+        return <div id='widget-container-TDReusability'>
+			
 			<ul>
 				<li><span id='menuPrincipal' className='active' onClick={_a => this.clickMenu('menuPrincipal','td-principal')}>TD Principal</span></li>
 				<li><span id='menuInterest' onClick={_a => this.clickMenu('menuInterest','td-interest')}>TD Interest</span></li>
