@@ -16,12 +16,14 @@ import { MessageService } from '@theia/core';
 import { Interest} from './interest';
 import { Principal} from './principal';
 import { Reusability} from './reusability';
+import {Security} from './security';
 //import Chart from './chart';
 //import ReactDOM = require('react-dom');
 //import ResizeObserver from 'react-resize-observer';
 import * as echarts from 'echarts';
 import { messageTypes, buildMessage } from '@unparallel/smartclide-frontend-comm';
 import { Message } from '@theia/core/lib/browser';
+import { BackendService } from '../common/protocol';
 
 
 @injectable()
@@ -39,6 +41,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		PrincipalProjectToken: '',
 		InterestFileNumber: '',
 		ReusabilityProjectURL: '',
+		SecurityProjectURL: '',
 		stateKeycloakToken: ''
 	}
 	
@@ -72,6 +75,9 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 
     @inject(MessageService)
     protected readonly messageService!: MessageService;
+	
+	@inject(BackendService)
+	private readonly backendService: BackendService;
 
     @postConstruct()
     protected async init(): Promise < void> {
@@ -88,6 +94,10 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		//Send a message to inform SmartCLIDE IDE
 		let message = buildMessage(messageTypes.COMPONENT_HELLO);
 		window.parent.postMessage(message, "*");
+
+		//Get env variable from backend
+		var tmp = await this.backendService.getEnvironmentVariable();
+		console.log("Log from postConstruct: "+tmp);
     }
 
 	//After Detach Remove Listener
@@ -100,10 +110,12 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
         const header = `Provide SonarQube URL instance and get latest results.`;
         const header2 = `Provide git URL and get latest results.`;
         const header3 = `Provide git URL and get results.`;
+		const header4 = `Provide git URL and get results.`;
 		
 		const interestInstance= new Interest();
 		const principalInstance= new Principal();
 		const reusabilityInstance= new Reusability();
+		const securityInstance= new Security();
 
 		/**
 		 	<ResizeObserver
@@ -116,6 +128,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				<li><span id='menuPrincipal' className='active' onClick={_a => this.clickMenu('menuPrincipal','td-principal')}>TD Principal</span></li>
 				<li><span id='menuInterest' onClick={_a => this.clickMenu('menuInterest','td-interest')}>TD Interest</span></li>
 				<li><span id='menuReusability' onClick={_a => this.clickMenu('menuReusability','reusability')}>Reusability</span></li>
+				<li><span id='menuSecurity' onClick={_a => this.clickMenu('menuSecurity','security')}>Security</span></li>
 			</ul>
 			<div id='td-principal'>
 				<AlertMessage type='INFO' header={header} />
@@ -138,7 +151,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				</div>
 				<button className='theia-button secondary' title='New Analysis' onClick={_a => principalInstance.runprocessNewAnalysis(this.messageService)} style={{display:"block", marginTop:"5px", marginBottom:"5px",}}>New Analysis</button>
 				<button className='theia-button secondary' title='Load Last Project Analysis' onClick={_a => principalInstance.runprocessGetMetrics(this.messageService)}>Get Project Analysis</button>
-				<button className='theia-button secondary' title='Load Last Enpoint Analysis' onClick={_a => principalInstance.runprocessGetMetricsEndpoint(this.messageService)}>Get Enpoint Analysis</button>
+				<button className='theia-button secondary' title='Load Last Enpoint Analysis' onClick={_a => principalInstance.runprocessGetMetricsEndpoint(this.messageService,this.backendService)}>Get Enpoint Analysis</button>
 				<div id='waitAnimation' className="lds-dual-ring"></div>
 				<div id='TdProjectResults'>
 					<p id='TDIndex' style={{marginLeft:'10px', display:'block'}}></p>
@@ -177,7 +190,28 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				<div id='chartReusability' className='chart'></div>
 				<div id='filesReusability'></div>
 			</div>
-			
+			<div id='security'>
+				<AlertMessage type='INFO' header={header4} />
+				<input onChange={this.updateInput} placeholder='Project URL' name='SecurityProjectURL'/>
+				<select id="select-security-language" style={{marginLeft:'10px'}}>
+					<option value="java">Java</option>
+					<option value="python">Python</option>
+					<option value="javascript">JavaScript</option>
+				</select>
+				<button className='theia-button secondary' title='Make Vulnerability Assessment' onClick={_a => securityInstance.runprocessVulnerabilityAssessmentSecurity(this.messageService)}>Make Vulnerability Assessment</button>
+				<button className='theia-button secondary' title='Make Security Analysis' onClick={_a => securityInstance.runprocessAnalyzeSecurity(this.messageService)}>Make Security Analysis</button>
+				<div id='waitAnimationSecurity' className="lds-dual-ring"></div>
+				<div id='vulnerabilityAssessment_Endpoint_Security'>
+					<p id='indexSecurity'></p>
+					<div id='chartSecurity' style={{display:'none', height:'100px', margin:'0 auto'}}></div>
+					<div id='resultsSecurity'></div>
+				</div>
+				<div id='analyze_Endpoint_Security'>
+					<div id='metricsSecurity'></div>
+					<button id='show-hide-security-issues' className='theia-button secondary' title='show-hide issues' onClick={_a => securityInstance.showhideIssues(this.messageService)} style={{display:'none'}}>Hide Issues</button>
+					<div id='listofSecurityIssues'></div>
+				</div>
+			</div>
 		</div>
     }
 
@@ -211,12 +245,14 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		document.getElementById('menuPrincipal')!.className='';
 		document.getElementById('menuInterest')!.className='';
 		document.getElementById('menuReusability')!.className='';
+		document.getElementById('menuSecurity')!.className='';
 		document.getElementById(menuItem)!.className='active';
 		
 		//change appearance
 		(document.getElementById("td-principal") as HTMLElement).style.display = "none";
 		(document.getElementById("td-interest") as HTMLElement).style.display = "none";
 		(document.getElementById("reusability") as HTMLElement).style.display = "none";
+		(document.getElementById("security") as HTMLElement).style.display = "none";
 		(document.getElementById(divId) as HTMLElement).style.display = "block";
 	}
 	
